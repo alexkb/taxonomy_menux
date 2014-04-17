@@ -1,0 +1,4 @@
+name = Taxonomy MenuX
+description = Provides menu preferences on taxonomy forms for easier management.
+core = 7.x
+package = custom
