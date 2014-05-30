@@ -58,6 +58,9 @@ function taxonomy_menux_taxonomy_term_delete($term) {
  * Implements hook_taxonomy_term_prepare().
  */
 function taxonomy_menux_taxonomy_term_prepare(&$term) {
+  if (is_object($term)) {
+    $term = (array)$term;
+  }
   if (empty($term['menu'])) {
     // Prepare the node for the edit form so that $node->menu always exists.
     $menu_name = strtok(variable_get('menu_parent_term_' . $term['vocabulary_machine_name'], ''), ':');
@@ -114,6 +117,10 @@ function taxonomy_menux_taxonomy_term_prepare(&$term) {
  * @see menu_node_submit()
  */
 function taxonomy_menux_form_taxonomy_form_term_alter(&$form, $form_state) {
+  if (isset($form_state['clicked_button']['#value']) && $form_state['clicked_button']['#value'] == "Delete") {
+    return;
+  }
+  
   // Generate a list of possible parents (not including this link or descendants).
   // @todo This must be handled in a #process handler.
   $term = &$form['#term'];
